@@ -2,39 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Athletic Triathlon Training Design System */
 
 @layer base {
   :root {
+    /* Base colors - Clean athletic theme */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 215 25% 14%;
 
+    /* Cards and surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 14%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Deep ocean blue for athletic brand */
+    --primary: 214 84% 20%;
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 214 84% 35%;
+    --primary-dark: 214 84% 15%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Energetic coral for accents */
+    --secondary: 14 90% 65%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-light: 14 90% 75%;
+    --secondary-dark: 14 90% 55%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Neutral grays */
+    --muted: 214 20% 96%;
+    --muted-foreground: 215 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 214 20% 94%;
+    --accent-foreground: 215 25% 14%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status colors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 98%;
+
+    /* Sport colors for swim/bike/run */
+    --sport-swim: 194 84% 45%;
+    --sport-bike: 28 90% 55%;
+    --sport-run: 142 76% 45%;
+    --sport-strength: 258 84% 55%;
+
+    /* UI elements */
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 214 84% 20%;
+
+    /* Gradients for hero sections */
+    --gradient-hero: linear-gradient(135deg, hsl(214 84% 20%), hsl(214 84% 35%));
+    --gradient-athletic: linear-gradient(135deg, hsl(214 84% 20%), hsl(14 90% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(214 20% 98%));
+
+    /* Shadows with athletic colors */
+    --shadow-primary: 0 10px 25px -5px hsl(214 84% 20% / 0.1), 0 4px 6px -2px hsl(214 84% 20% / 0.05);
+    --shadow-glow: 0 0 40px hsl(214 84% 35% / 0.3);
+
+    /* Animation variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
 
