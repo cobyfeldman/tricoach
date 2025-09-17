@@ -32,20 +32,6 @@ const HeroSection = () => {
               </Button>
             </div>
 
-            <div className="flex items-center gap-8 pt-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">10k+</div>
-                <div className="text-sm text-muted-foreground">Athletes</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">95%</div>
-                <div className="text-sm text-muted-foreground">Goal Achievement</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">4.9★</div>
-                <div className="text-sm text-muted-foreground">User Rating</div>
-              </div>
-            </div>
           </div>
 
           <div className="relative">
