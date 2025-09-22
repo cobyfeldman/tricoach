@@ -2,9 +2,26 @@ import { Outlet } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
-import { Bell, User } from "lucide-react";
+import { Bell, User, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { signOut } from "@/lib/auth";
+import { useToast } from "@/components/ui/use-toast";
 
 export function AppLayout() {
+  const { profile } = useAuth();
+  const { toast } = useToast();
+
+  const handleSignOut = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -15,11 +32,17 @@ export function AppLayout() {
               <SidebarTrigger aria-label="Toggle sidebar" />
               <div className="flex-1" />
               <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">
+                  Welcome, {profile?.full_name || 'User'}
+                </span>
                 <Button variant="ghost" size="icon" aria-label="Notifications">
                   <Bell className="h-4 w-4" />
                 </Button>
                 <Button variant="ghost" size="icon" aria-label="User profile">
                   <User className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" aria-label="Sign out" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4" />
                 </Button>
               </div>
             </div>
