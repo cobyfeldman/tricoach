@@ -4,11 +4,11 @@ import FeatureSection from "@/components/FeatureSection";
 import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 
-const Index = () => {
+const Marketing = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main>
+      <main role="main">
         <HeroSection />
         <FeatureSection />
         <PricingSection />
@@ -18,4 +18,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Marketing;
