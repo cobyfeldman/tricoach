@@ -11,15 +11,15 @@ const Footer = () => {
               <span className="font-bold text-foreground">TriFlow</span>
             </div>
             <p className="text-muted-foreground text-sm">
-              The complete triathlon training platform for athletes of all levels.
+              Free forever triathlon training platform for athletes of all levels.
             </p>
           </div>
           
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Product</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Features</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a></li>
+              <li><a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a></li>
+              <li><a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a></li>
               <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">API</a></li>
               <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Integrations</a></li>
             </ul>
@@ -46,7 +46,10 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t mt-12 pt-8 text-center">
+        <div className="border-t mt-12 pt-8 text-center space-y-2">
+          <p className="text-sm text-muted-foreground font-medium">
+            Free forever — sign up and start training.
+          </p>
           <p className="text-muted-foreground text-sm">
             © 2024 TriFlow. All rights reserved.
           </p>

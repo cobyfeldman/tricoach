@@ -16,7 +16,7 @@ import {
 
 const navigationItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
-  { title: "Training Plans", url: "/plans", icon: Calendar },
+  { title: "Training Plans", url: "/training-plans", icon: Calendar },
   { title: "Workouts", url: "/workouts", icon: Dumbbell },
   { title: "Analytics", url: "/analytics", icon: BarChart3 },
 ];

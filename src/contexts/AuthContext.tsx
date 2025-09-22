@@ -9,7 +9,6 @@ interface Profile {
   training_level: string | null;
   race_date: string | null;
   sport_focus: string | null;
-  plan: string;
   created_at: string;
   updated_at: string;
 }

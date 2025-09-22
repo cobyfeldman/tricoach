@@ -54,7 +54,6 @@ export const updateUserProfile = async (userId: string, updates: Partial<{
   training_level: string;
   race_date: string;
   sport_focus: string;
-  plan: string;
 }>) => {
   const { data, error } = await supabase
     .from('profiles')

@@ -1,8 +1,19 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Plus, Target } from "lucide-react";
+import { Calendar, Plus, Target, Copy } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
-const Plans = () => {
+const TrainingPlans = () => {
+  const { toast } = useToast();
+
+  const handleInviteFriend = () => {
+    navigator.clipboard.writeText(window.location.origin);
+    toast({
+      title: "Link copied!",
+      description: "Share TriCoach with your friends - it's free forever!",
+    });
+  };
+
   return (
     <div className="space-y-6" role="main" aria-labelledby="plans-title">
       <div className="flex items-center justify-between">
@@ -10,12 +21,18 @@ const Plans = () => {
           <h1 id="plans-title" className="text-3xl font-bold text-foreground">
             Training Plans
           </h1>
-          <p className="text-muted-foreground">Manage your AI-generated training plans</p>
+          <p className="text-muted-foreground">Create and manage your AI-generated training plans</p>
         </div>
-        <Button className="flex items-center gap-2" aria-label="Create new training plan">
-          <Plus className="h-4 w-4" aria-hidden="true" />
-          New Plan
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handleInviteFriend} className="flex items-center gap-2">
+            <Copy className="h-4 w-4" aria-hidden="true" />
+            Invite a Friend
+          </Button>
+          <Button className="flex items-center gap-2" aria-label="Create new training plan">
+            <Plus className="h-4 w-4" aria-hidden="true" />
+            New Plan
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -96,7 +113,7 @@ const Plans = () => {
             <Plus className="h-8 w-8 text-muted-foreground mb-4" aria-hidden="true" />
             <h3 className="text-lg font-semibold mb-2">Create New Plan</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Let AI generate a personalized training plan for your next race
+              Let AI generate a personalized training plan for your next race - completely free!
             </p>
             <Button>Get Started</Button>
           </CardContent>
@@ -106,4 +123,4 @@ const Plans = () => {
   );
 };
 
-export default Plans;
+export default TrainingPlans;

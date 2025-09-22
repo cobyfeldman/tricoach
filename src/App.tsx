@@ -9,7 +9,8 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Marketing from "@/routes/Marketing";
 import Dashboard from "@/routes/Dashboard";
-import Plans from "@/routes/Plans";
+import TrainingPlans from "@/routes/TrainingPlans";
+
 import Workouts from "@/routes/Workouts";
 import Analytics from "@/routes/Analytics";
 import Auth from "@/routes/Auth";
@@ -34,7 +35,7 @@ const App = () => (
                 </ProtectedRoute>
               }>
                 <Route path="dashboard" element={<Dashboard />} />
-                <Route path="plans" element={<Plans />} />
+                <Route path="training-plans" element={<TrainingPlans />} />
                 <Route path="workouts" element={<Workouts />} />
                 <Route path="analytics" element={<Analytics />} />
               </Route>
