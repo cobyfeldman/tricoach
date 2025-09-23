@@ -6,7 +6,8 @@ export const signInWithMagicLink = async (email: string) => {
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: redirectUrl
+      emailRedirectTo: redirectUrl,
+      shouldCreateUser: true
     }
   });
   
