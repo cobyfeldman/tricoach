@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, Calendar, TrendingUp, Target } from "lucide-react";
 import { WeeklySummaryCard } from "@/components/WeeklySummaryCard";
+import { ChatBot } from "@/components/ChatBot";
 
 const Dashboard = () => {
   return (
@@ -116,6 +117,8 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+      
+      <ChatBot />
     </div>
   );
 };
