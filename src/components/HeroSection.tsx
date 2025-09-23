@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/hero-triathlon.jpg";
-import demoThumbnail from "@/assets/demo-video-thumbnail.jpg";
 
 const HeroSection = () => {
   return (
@@ -28,35 +26,6 @@ const HeroSection = () => {
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="lg" className="group">
-                    <Play className="mr-2 h-4 w-4" />
-                    Watch Demo
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-4xl">
-                  <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
-                    <video 
-                      src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                      poster={demoThumbnail}
-                      controls
-                      className="w-full h-full object-cover"
-                      preload="metadata"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                    <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
-                      <div className="bg-black/50 backdrop-blur-sm rounded-lg p-4">
-                        <h3 className="text-white font-semibold text-lg mb-2">TriFlow Demo</h3>
-                        <p className="text-white/80 text-sm">
-                          Sample demo video showing triathlon training app features. (This is a placeholder video for demonstration purposes)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
             </div>
 
           </div>
