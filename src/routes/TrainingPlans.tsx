@@ -182,7 +182,7 @@ const TrainingPlans = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="distance">Race Distance</Label>
-                  <Select onValueChange={(value) => setNewPlanData({...newPlanData, distance: value})}>
+                  <Select value={newPlanData.distance} onValueChange={(value) => setNewPlanData({...newPlanData, distance: value})}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select race distance" />
                     </SelectTrigger>
