@@ -39,15 +39,14 @@ export interface GeneratePlanRequest {
 export const generatePlan = async (request: GeneratePlanRequest): Promise<Plan> => {
   const { data: { session } } = await supabase.auth.getSession();
   
-  if (!session) {
-    throw new Error('Not authenticated');
-  }
+  // For development, allow plan generation without authentication
+  const headers = session ? {
+    'Authorization': `Bearer ${session.access_token}`,
+  } : {};
 
   const response = await supabase.functions.invoke('generate-plan', {
     body: request,
-    headers: {
-      'Authorization': `Bearer ${session.access_token}`,
-    },
+    headers,
   });
 
   if (response.error) {
