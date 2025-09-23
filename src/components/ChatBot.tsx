@@ -49,9 +49,9 @@ export function ChatBot() {
 
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        throw new Error('Not authenticated');
-      }
+      
+      // For development, allow chat without authentication
+      const authHeader = session ? `Bearer ${session.access_token}` : '';
 
       const conversation = messages.map(msg => ({
         role: msg.role,
@@ -63,9 +63,9 @@ export function ChatBot() {
           message: userMessage.content,
           conversation
         },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
+        headers: authHeader ? {
+          Authorization: authHeader,
+        } : {},
       });
 
       if (error) throw error;

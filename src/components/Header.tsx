@@ -45,10 +45,10 @@ const Header = () => {
             </div>
           </div>
           <nav className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" onClick={() => navigate("/auth")}>
-              Sign In
+            <Button variant="ghost" size="sm" onClick={() => navigate("/dashboard")}>
+              Dashboard
             </Button>
-            <Button variant="hero" size="sm" onClick={() => navigate("/auth")}>
+            <Button variant="hero" size="sm" onClick={() => navigate("/dashboard")}>
               Get Started
             </Button>
           </nav>

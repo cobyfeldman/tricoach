@@ -29,16 +29,15 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Marketing />} />
               <Route path="/auth" element={<Auth />} />
-              <Route path="/*" element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }>
+              
+              {/* Direct access to app features without authentication */}
+              <Route path="/*" element={<AppLayout />}>
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="training-plans" element={<TrainingPlans />} />
                 <Route path="workouts" element={<Workouts />} />
                 <Route path="analytics" element={<Analytics />} />
               </Route>
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
