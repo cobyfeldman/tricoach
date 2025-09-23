@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import heroImage from "@/assets/hero-triathlon.jpg";
+import demoThumbnail from "@/assets/demo-video-thumbnail.jpg";
 
 const HeroSection = () => {
   return (
@@ -23,13 +25,39 @@ const HeroSection = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="hero" size="lg" className="group">
-                Start Free Trial
+                Get Started
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button variant="outline" size="lg" className="group">
-                <Play className="mr-2 h-4 w-4" />
-                Watch Demo
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="lg" className="group">
+                    <Play className="mr-2 h-4 w-4" />
+                    Watch Demo
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-4xl">
+                  <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
+                    <img 
+                      src={demoThumbnail} 
+                      alt="TriFlow App Demo" 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-white/20 backdrop-blur-sm rounded-full p-6">
+                        <Play className="h-12 w-12 text-white" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="bg-black/50 backdrop-blur-sm rounded-lg p-4">
+                        <h3 className="text-white font-semibold text-lg mb-2">TriFlow Demo</h3>
+                        <p className="text-white/80 text-sm">
+                          See how TriFlow helps triathletes plan training, track workouts, and analyze performance with AI-powered insights.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
 
           </div>

@@ -49,7 +49,7 @@ const Header = () => {
               Sign In
             </Button>
             <Button variant="hero" size="sm" onClick={() => navigate("/auth")}>
-              Get Started Free
+              Get Started
             </Button>
           </nav>
         </div>
@@ -64,7 +64,7 @@ const Header = () => {
               About
             </a>
             <p className="text-sm text-muted-foreground border-t pt-2">
-              Free forever — sign up and start training.
+              Free to use — sign up and start training.
             </p>
           </nav>
         </div>
