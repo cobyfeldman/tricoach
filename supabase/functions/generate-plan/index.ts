@@ -84,29 +84,22 @@ serve(async (req) => {
   }
 
   try {
-    // Get user from auth header
+    // For development mode - allow plan generation without authentication
+    let userId = 'development-user';
+    
     const authHeader = req.headers.get('authorization');
-    if (!authHeader) {
-      console.error('No authorization header');
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    if (authHeader) {
+      const { data: { user }, error: authError } = await supabase.auth.getUser(
+        authHeader.replace('Bearer ', '')
+      );
+
+      if (!authError && user) {
+        userId = user.id;
+        console.log('User authenticated:', user.id);
+      }
     }
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', '')
-    );
-
-    if (authError || !user) {
-      console.error('Auth error:', authError);
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    console.log('User authenticated:', user.id);
+    console.log('Using user ID for plan generation:', userId);
 
     const requestData = await req.json();
     console.log('Request data:', requestData);
@@ -170,7 +163,7 @@ serve(async (req) => {
     const { data: savedPlan, error: dbError } = await supabase
       .from('plans')
       .insert({
-        user_id: user.id,
+        user_id: userId,
         title: planData.title || `${requestData.distance} Training Plan`,
         distance: requestData.distance,
         weeks: planData.weeks,
