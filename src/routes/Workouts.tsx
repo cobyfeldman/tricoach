@@ -2,6 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Clock, MapPin, Heart } from "lucide-react";
+import { WorkoutQuickAdd } from "@/components/WorkoutQuickAdd";
+import { WorkoutImportCSV } from "@/components/WorkoutImportCSV";
 
 const Workouts = () => {
   const workouts = [
@@ -64,10 +66,10 @@ const Workouts = () => {
           </h1>
           <p className="text-muted-foreground">Track and log your training sessions</p>
         </div>
-        <Button className="flex items-center gap-2" aria-label="Log new workout">
-          <Plus className="h-4 w-4" aria-hidden="true" />
-          Log Workout
-        </Button>
+        <div className="flex gap-2">
+          <WorkoutImportCSV />
+          <WorkoutQuickAdd />
+        </div>
       </div>
 
       <div className="space-y-4">
