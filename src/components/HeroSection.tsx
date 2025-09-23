@@ -37,21 +37,20 @@ const HeroSection = () => {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-4xl">
                   <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
-                    <img 
-                      src={demoThumbnail} 
-                      alt="TriFlow App Demo" 
+                    <video 
+                      src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                      poster={demoThumbnail}
+                      controls
                       className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="bg-white/20 backdrop-blur-sm rounded-full p-6">
-                        <Play className="h-12 w-12 text-white" />
-                      </div>
-                    </div>
-                    <div className="absolute bottom-4 left-4 right-4">
+                      preload="metadata"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                    <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
                       <div className="bg-black/50 backdrop-blur-sm rounded-lg p-4">
                         <h3 className="text-white font-semibold text-lg mb-2">TriFlow Demo</h3>
                         <p className="text-white/80 text-sm">
-                          See how TriFlow helps triathletes plan training, track workouts, and analyze performance with AI-powered insights.
+                          Sample demo video showing triathlon training app features. (This is a placeholder video for demonstration purposes)
                         </p>
                       </div>
                     </div>
