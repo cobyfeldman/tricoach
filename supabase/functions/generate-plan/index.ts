@@ -119,6 +119,13 @@ serve(async (req) => {
 
     // Generate plan with OpenAI
     console.log('Calling OpenAI API');
+    console.log('OpenAI API Key exists:', !!openAIApiKey);
+    console.log('OpenAI API Key length:', openAIApiKey?.length || 0);
+    
+    if (!openAIApiKey) {
+      throw new Error('OpenAI API key not configured');
+    }
+    
     const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -142,9 +149,11 @@ serve(async (req) => {
       }),
     });
 
+    console.log('OpenAI Response Status:', openAIResponse.status);
     if (!openAIResponse.ok) {
-      console.error('OpenAI API error:', openAIResponse.status, await openAIResponse.text());
-      throw new Error('Failed to generate plan with AI');
+      const errorText = await openAIResponse.text();
+      console.error('OpenAI API error:', openAIResponse.status, errorText);
+      throw new Error(`OpenAI API error: ${openAIResponse.status} - ${errorText}`);
     }
 
     const openAIData = await openAIResponse.json();
