@@ -2,7 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
@@ -117,51 +117,55 @@ serve(async (req) => {
       });
     }
 
-    // Generate plan with OpenAI
-    console.log('Calling OpenAI API');
-    console.log('OpenAI API Key exists:', !!openAIApiKey);
-    console.log('OpenAI API Key length:', openAIApiKey?.length || 0);
+    // Generate plan with Gemini
+    console.log('Calling Gemini API');
+    console.log('Gemini API Key exists:', !!geminiApiKey);
+    console.log('Gemini API Key length:', geminiApiKey?.length || 0);
     
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+    if (!geminiApiKey) {
+      throw new Error('Gemini API key not configured');
     }
     
-    const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    const systemPrompt = 'You are an expert triathlon coach. Generate structured training plans in valid JSON format only.';
+    const userPrompt = generatePlanPrompt(requestData.profile, requestData.distance);
+    
+    const geminiResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'x-goog-api-key': geminiApiKey,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          { 
-            role: 'system', 
-            content: 'You are an expert triathlon coach. Generate structured training plans in valid JSON format only.' 
-          },
-          { 
-            role: 'user', 
-            content: generatePlanPrompt(requestData.profile, requestData.distance) 
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 4000,
+        contents: [{
+          role: 'user',
+          parts: [{ text: userPrompt }]
+        }],
+        systemInstruction: {
+          parts: [{ text: systemPrompt }]
+        },
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 4000,
+        }
       }),
     });
 
-    console.log('OpenAI Response Status:', openAIResponse.status);
-    if (!openAIResponse.ok) {
-      const errorText = await openAIResponse.text();
-      console.error('OpenAI API error:', openAIResponse.status, errorText);
-      throw new Error(`OpenAI API error: ${openAIResponse.status} - ${errorText}`);
+    console.log('Gemini Response Status:', geminiResponse.status);
+    if (!geminiResponse.ok) {
+      const errorText = await geminiResponse.text();
+      console.error('Gemini API error:', geminiResponse.status, errorText);
+      throw new Error(`Gemini API error: ${geminiResponse.status} - ${errorText}`);
     }
 
-    const openAIData = await openAIResponse.json();
-    console.log('OpenAI response received');
+    const geminiData = await geminiResponse.json();
+    console.log('Gemini response received');
     
     let planData;
     try {
-      planData = JSON.parse(openAIData.choices[0].message.content);
+      const responseText = geminiData.candidates[0].content.parts[0].text;
+      // Remove any markdown code blocks if present
+      const cleanText = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+      planData = JSON.parse(cleanText);
     } catch (parseError) {
       console.error('Failed to parse AI response as JSON:', parseError);
       throw new Error('Invalid plan format from AI');

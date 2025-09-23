@@ -2,7 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
@@ -49,51 +49,62 @@ serve(async (req) => {
       });
     }
 
-    // Prepare conversation history for OpenAI
-    const messages = [
-      {
-        role: 'system',
-        content: `You are TriFlow AI, a helpful assistant specialized in triathlon training, nutrition, and race preparation. You help users with:
-        - Training advice and workout planning
-        - Nutrition guidance for endurance sports
-        - Race day preparation and strategy
-        - Recovery and injury prevention
-        - Equipment recommendations
-        - Goal setting and motivation
-        
-        Keep your responses helpful, encouraging, and focused on triathlon and endurance sports. Be concise but informative.`
-      },
-      ...conversation,
-      {
-        role: 'user',
-        content: message
-      }
-    ];
+    // Prepare conversation history for Gemini
+    const systemPrompt = `You are TriFlow AI, a helpful assistant specialized in triathlon training, nutrition, and race preparation. You help users with:
+    - Training advice and workout planning
+    - Nutrition guidance for endurance sports
+    - Race day preparation and strategy
+    - Recovery and injury prevention
+    - Equipment recommendations
+    - Goal setting and motivation
+    
+    Keep your responses helpful, encouraging, and focused on triathlon and endurance sports. Be concise but informative.`;
 
-    console.log('Calling OpenAI API');
-    const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Convert conversation to Gemini format
+    const contents = [];
+    
+    // Add conversation history
+    for (const msg of conversation) {
+      contents.push({
+        role: msg.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: msg.content }]
+      });
+    }
+    
+    // Add current message
+    contents.push({
+      role: 'user',
+      parts: [{ text: message }]
+    });
+
+    console.log('Calling Gemini API');
+    const geminiResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'x-goog-api-key': geminiApiKey,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: messages,
-        temperature: 0.7,
-        max_tokens: 500,
+        contents: contents,
+        systemInstruction: {
+          parts: [{ text: systemPrompt }]
+        },
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 500,
+        }
       }),
     });
 
-    if (!openAIResponse.ok) {
-      console.error('OpenAI API error:', openAIResponse.status, await openAIResponse.text());
+    if (!geminiResponse.ok) {
+      console.error('Gemini API error:', geminiResponse.status, await geminiResponse.text());
       throw new Error('Failed to get response from AI');
     }
 
-    const openAIData = await openAIResponse.json();
-    console.log('OpenAI response received');
+    const geminiData = await geminiResponse.json();
+    console.log('Gemini response received');
     
-    const reply = openAIData.choices[0].message.content;
+    const reply = geminiData.candidates[0].content.parts[0].text;
 
     return new Response(JSON.stringify({
       reply,
